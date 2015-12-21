@@ -6,10 +6,19 @@ import (
 	"encoding/json"
 	"os"
 	"strconv"
+	"flag"
 )
 
-func TestEmptyRegistration(t *testing.T) {
 
+
+func TestCommandLine(t *testing.T) {
+	reg := NewRegistrationFromCommandline()
+
+	t.Log(*reg)
+}
+
+
+func TestEmptyRegistration(t *testing.T) {
 	t.Log("Registration test start...\n")
 
 	reg := NewRegistration("", "", 0, 0, "")

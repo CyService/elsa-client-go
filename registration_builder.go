@@ -12,7 +12,7 @@ const (
 	defIp = "127.0.0.1"
 	defCap = 4
 	defVer = "v1"
-	defPort = 3000
+	DefPort = 3000
 )
 
 
@@ -25,7 +25,7 @@ func NewRegistrationFromCommandline() *Registration {
 	// Optional
 	cap := flag.Int("cap", defCap, "Number of instances")
 	ver := flag.String("ver", defVer, "API version")
-	port := flag.Int("port", defPort, "This API server's port")
+	port := flag.Int("port", DefPort, "This API server's port")
 
 	flag.Parse()
 
@@ -35,6 +35,8 @@ func NewRegistrationFromCommandline() *Registration {
 	}
 
 	var serverIp *string
+
+	log.Println("Given IP address: ", *ip)
 
 	if *ip == defIp {
 		log.Println("Warning: IP set to", defIp, " You must provide IP address with '-ip' option.")
@@ -59,7 +61,7 @@ func NewRegistration(name string, ip string, port int, cap int, ver string) *Reg
 	}
 
 	if port == 0 {
-		port = defPort
+		port = DefPort
 	}
 
 	if cap == 0 {
