@@ -10,10 +10,13 @@ import (
 
 func TestRegisterer(t *testing.T) {
 
+	// Local instance
+	elsa := "http://192.168.99.100:8080/registration"
+
 	reg := NewRegistration("", "", 0, 0, "")
 	json.NewEncoder(os.Stdout).Encode(reg)
 
-	err := RegisterService("", reg, RetrySetting{RetryInterval:1, RetryMax:3})
+	err := RegisterService(elsa, reg, RetrySetting{RetryInterval:1, RetryMax:3})
 
 	if err != nil {
 		t.Log("Failed to register.")

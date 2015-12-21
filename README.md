@@ -9,7 +9,7 @@ This is a library for building client to register a Go REST API server to Submit
 
 * Requirements
   * Go 1.5.x and later
-  * A running instance of [elsa]()
+  * A running instance of [elsa](https://github.com/cytoscape-ci/elsa)
 
 ```go
 
@@ -20,3 +20,5 @@ reg := NewRegistration("myservicename", "192.168.99.100", 3000, 4, "v1")
 err := RegisterService("http://my-elsa-instance:8080/registration", reg, RetrySetting{RetryInterval:10, RetryMax:5})
 
 ```
+
+For testing, you can use official [Docker image](https://hub.docker.com/r/cytoscape/elsa/) to run local instance of elsa.

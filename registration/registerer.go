@@ -92,7 +92,7 @@ func registerServices(agentUrl string, regs []*Registration, retry RetrySetting)
 		defer res.Body.Close()
 		resBody, err := ioutil.ReadAll(res.Body)
 
-		log.Println(string(resBody))
+		log.Println("Elsa replied: ", string(resBody))
 		return err
 	} else {
 		return err
