@@ -1,4 +1,4 @@
-package registration
+package reg
 
 
 type Instance struct {

@@ -1,4 +1,4 @@
-package registration
+package reg
 
 
 import (
@@ -19,7 +19,7 @@ func TestRegisterer(t *testing.T) {
 	reg := NewRegistration("", "", 0, 0, "")
 	json.NewEncoder(os.Stdout).Encode(reg)
 
-	err := RegisterStruct(elsa, reg, RetrySetting{RetryInterval:1, RetryMax:3})
+	err := RegisterStruct(elsa, reg, Retry{Interval:1, Max:3})
 
 	if err != nil {
 		t.Log("Failed to register.")
@@ -32,7 +32,7 @@ func TestRegisterer(t *testing.T) {
 
 func TestFileRegisterer(t *testing.T) {
 
-	err := Register(elsa, RetrySetting{RetryInterval:1, RetryMax:3})
+	err := Register(elsa)
 
 	if err != nil {
 		t.Log("Failed to register.")
@@ -51,7 +51,7 @@ func TestUnregisterer(t *testing.T) {
 	reg := NewRegistration("test-service", "", 0, 0, "")
 	json.NewEncoder(os.Stdout).Encode(reg)
 
-	err := RegisterStruct(elsa, reg, RetrySetting{RetryInterval:1, RetryMax:3})
+	err := RegisterStruct(elsa, reg, Retry{Interval:1, Max:3})
 
 	if err != nil {
 		t.Log("Failed to register.")

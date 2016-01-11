@@ -1,4 +1,4 @@
-package registration
+package reg
 
 
 import (
@@ -21,19 +21,21 @@ const (
 )
 
 
-type RetrySetting struct {
-	RetryMax int
-	RetryInterval time.Duration
+type Retry struct {
+	Max      int
+	Interval time.Duration
 }
 
+var defRetry = Retry{Max:retryMax, Interval:interval}
 
-func Register(agentUrl string, retry RetrySetting) error {
-	return RegisterFile(agentUrl, ".", retry)
+
+func Register(agentUrl string) error {
+	return RegisterFile(agentUrl, ".", defRetry)
 }
 
 
 // Load from resource file
-func RegisterFile(agentUrl string, path string, retry RetrySetting) error {
+func RegisterFile(agentUrl string, path string, retry Retry) error {
 
 	var registration Registration
 
@@ -58,14 +60,14 @@ func RegisterFile(agentUrl string, path string, retry RetrySetting) error {
 
 
 // Generate from registration object
-func RegisterStruct(agentUrl string, reg *Registration, retry RetrySetting) error {
+func RegisterStruct(agentUrl string, reg *Registration, retry Retry) error {
 
-	if retry.RetryMax == 0 {
-		retry.RetryMax = retryMax
+	if retry.Max == 0 {
+		retry.Max = retryMax
 	}
 
-	if retry.RetryInterval == 0 {
-		retry.RetryInterval = interval
+	if retry.Interval == 0 {
+		retry.Interval = interval
 	}
 
 	log.Println("Service Registration start...")
@@ -84,9 +86,9 @@ func RegisterStruct(agentUrl string, reg *Registration, retry RetrySetting) erro
 
 	var regError error
 
-	intSec := retry.RetryInterval * time.Second
+	intSec := retry.Interval * time.Second
 
-	for retryCount < retry.RetryMax {
+	for retryCount < retry.Max {
 		regError = registerServices(agentUrl, regs, retry)
 
 		if regError == nil {
@@ -124,7 +126,7 @@ func Unregister(agentUrl string, reg *Registration) error {
 }
 
 // Register multiple services at once
-func registerServices(agentUrl string, regs []*Registration, retry RetrySetting) error {
+func registerServices(agentUrl string, regs []*Registration, retry Retry) error {
 
 	// Encode JSON
 	regJson, err := json.Marshal(regs)
